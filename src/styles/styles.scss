@@ -1,0 +1,5 @@
+//; is mandatory in scss
+//while importing partials, exclude first _ and .scss extention
+
+@import './base/settings'; //import settings file first so that you can use the variables defined there, in below files
+@import './base/base';

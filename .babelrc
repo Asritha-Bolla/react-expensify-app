@@ -1,0 +1,5 @@
+//this file tells babel what presets to use
+{
+    "presets": ["env", "react"],
+    "plugins": ["transform-class-properties", "transform-object-rest-spread"]
+}

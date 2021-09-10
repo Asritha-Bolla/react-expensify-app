@@ -8,7 +8,7 @@ module.exports = (env) => {
     return {
         entry: './src/app.js', //relative path
         output: {
-            path: path.join(__dirname, 'public'), //ABSOLUTE PATH IS MANDATORY HERE!
+            path: path.join(__dirname, 'public', 'dist'), //ABSOLUTE PATH IS MANDATORY HERE!
             filename: 'bundle.js'
         },
         module: {
@@ -52,9 +52,10 @@ module.exports = (env) => {
         //i.e, only our application's core js is  present in the bundle.js now which leads to a much lighter and faster application
         devServer: {
             contentBase: path.join(__dirname, 'public'),
-            historyApiFallback: true //404's will fallback to /index.html
+            historyApiFallback: true, //404's will fallback to /index.html
             //i.e.,whenever a route gives 404 since that route is fetched from server side, dev server re-renders index.html for all such routes
             //index.html uses bundle.js which is generated from app.js. In app.js client side routes are defined. So the required route is fetched from there instead of server
+            publicPath: '/dist/'
         }
     }
 }

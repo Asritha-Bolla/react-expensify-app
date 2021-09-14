@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import AppRouter from './routers/AppRouter'
 import configureStore from './store/configureStore'
-import { addExpense } from './actions/expenses'
-import { setTextFilter } from './actions/filters'
-import getVisibleExpenses from './selectors/expenses'
+// import { addExpense } from './actions/expenses'
+// import { setTextFilter } from './actions/filters'
+// import getVisibleExpenses from './selectors/expenses'
 
 import 'normalize.css/normalize.css' //normalize.css file in normalize.css module. This gives common style base across browsers/OS, so that styles built on top of that base looks same in all devices/browsers
 import './styles/styles.scss' //webpack sees this and converts css to js using loaders we installed. Not good performance-wise
 import 'react-dates/lib/css/_datepicker.css'
+
+import './firebase/firebase'
 
 const store = configureStore()
 

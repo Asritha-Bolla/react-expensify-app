@@ -1,5 +1,17 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin') //to extract css out of bundle.js into a new file
+const webpack = require('webpack')
+
+//process.env.NODE_ENV is set by heroku in production and by cross-env module via 'test' script (see package.json) for testing. For development, this value doesn't exist
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+
+//If development, use .env.development file
+//If testing, use .env.test file. Both these files are excluded from git repository for security
+if (process.env.NODE_ENV === 'test') {
+    require('dotenv').config({ path: '.env.test' })
+} else if (process.env.NODE_ENV === 'development') {
+    require('dotenv').config({ path: '.env.development' })
+}
 
 module.exports = (env) => {
     const isProduction = env === 'production'
@@ -45,7 +57,16 @@ module.exports = (env) => {
             }]
         },
         plugins: [
-            CSSExtract
+            CSSExtract,
+            new webpack.DefinePlugin({
+                'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY), //replaces process.env.FIREBASE_API_KEY on client side JS (see firebase.js) with value from env file
+                'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+                'process.env.FIREBASE_DATABASE_URL': JSON.stringify(process.env.FIREBASE_DATABASE_URL),
+                'process.env.FIREBASE_PROJECT_ID': JSON.stringify(process.env.FIREBASE_PROJECT_ID),
+                'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
+                'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
+                'process.env.FIREBASE_APP_ID': JSON.stringify(process.env.FIREBASE_APP_ID)
+            })
         ],
         devtool: isProduction ? 'source-map' :'inline-source-map', //makes debugging easier in browser's Dev tools (F12) by pointing console.logs or errors to actual source js file rather than bundle.js
         //source-map is very very slow to build, but it suits production since rebuilds are not quite often there. This creates a separate map file which ONLY loads if someone opens dev tools

@@ -6,6 +6,7 @@ import configureStore from './store/configureStore'
 // import { addExpense } from './actions/expenses'
 // import { setTextFilter } from './actions/filters'
 // import getVisibleExpenses from './selectors/expenses'
+import { startSetExpenses } from './actions/expenses'
 
 import 'normalize.css/normalize.css' //normalize.css file in normalize.css module. This gives common style base across browsers/OS, so that styles built on top of that base looks same in all devices/browsers
 import './styles/styles.scss' //webpack sees this and converts css to js using loaders we installed. Not good performance-wise
@@ -38,4 +39,9 @@ const jsx = (
     </Provider>
 )
 
-ReactDOM.render(jsx, document.getElementById('myapp'))
+ReactDOM.render(<p>Loading...</p>, document.getElementById('myapp'))
+
+//to fetch existing expenses from firebase database and set them to redux store
+store.dispatch(startSetExpenses()).then(() => {
+    ReactDOM.render(jsx, document.getElementById('myapp'))
+})

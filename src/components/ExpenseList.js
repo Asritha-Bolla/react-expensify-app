@@ -12,7 +12,7 @@ export const ExpenseList = (props) => ( //stateless function component. This doe
             ) : (
                 props.expenses.map((expense) => {
                     return <ExpenseListItem key={expense.id} {...expense} />
-                 })
+                })
             )
         }
     </div>
@@ -24,6 +24,7 @@ export const ExpenseList = (props) => ( //stateless function component. This doe
 //The HOC returned is thus connecting our React component with the redux store (YAYY!!)
 
 const mapStateToProps = (state) => { //optional if you don't need the data from store
+    console.log(state.expenses)
     return {
         expenses: selectExpenses(state.expenses, state.filters) //we want to show only the filtered expenses
     }

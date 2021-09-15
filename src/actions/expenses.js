@@ -19,16 +19,16 @@ import database from '../firebase/firebase'
 //     }
 // })
 
-export const removeExpense = ({ id } = {}) => ({ //id is mandatory, so no default
-    type: 'REMOVE_EXPENSE',
-    id
-})
+// export const removeExpense = ({ id } = {}) => ({ //id is mandatory, so no default
+//     type: 'REMOVE_EXPENSE',
+//     id
+// })
 
-export const editExpense = (id, updates) => ({
-    type: 'EDIT_EXPENSE',
-    id,
-    updates
-})
+// export const editExpense = (id, updates) => ({
+//     type: 'EDIT_EXPENSE',
+//     id,
+//     updates
+// })
 
 //component calls action generator
 //action generator returns function
@@ -69,7 +69,7 @@ export const startSetExpenses = () => {
             const expenses = []
             snapshot.forEach(childSnapshot => {
                 expenses.push({
-                    id: childSnapshot.id,
+                    id: childSnapshot.key,
                     ...childSnapshot.val()
                 }) 
             });
@@ -77,3 +77,23 @@ export const startSetExpenses = () => {
         })
     }
 }
+
+
+export const removeExpense = ({ id } = {}) => ({ //id is mandatory, so no default
+    type: 'REMOVE_EXPENSE',
+    id
+})
+
+export const startRemoveExpense = ({ id } = {}) => {
+    return (dispatch) => {
+        return database.ref(`expenses/${id}`).remove().then(() => {
+            dispatch(removeExpense({ id }))
+        })
+    }
+}
+
+export const editExpense = (id, updates) => ({
+    type: 'EDIT_EXPENSE',
+    id,
+    updates
+})

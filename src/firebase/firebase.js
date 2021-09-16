@@ -20,7 +20,9 @@ firebase.initializeApp(firebaseConfig)
 
 const database = firebase.database()
 
-export { firebase, database as default }
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
+
+export { firebase, googleAuthProvider, database as default }
 
 //// fetch data once 
 // database.ref().once('value').then((snapshot) => {

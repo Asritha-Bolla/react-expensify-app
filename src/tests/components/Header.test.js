@@ -7,7 +7,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 //import ReactShallowRenderer from 'react-test-renderer/shallow'
 //import toJson from 'enzyme-to-json' //alternatively setup this in jest.config.json (this file is loaded by jest before it runs the test files)
-import Header from '../../components/Header'
+import { Header } from '../../components/Header'
 
 test('should render header correctly', () => {
     // const renderer = new ReactShallowRenderer()
@@ -18,8 +18,15 @@ test('should render header correctly', () => {
     //else go back and remove the unintentional change so that snapshot will match again with the component
     //all snapshots can be viewed under '__snapshots__' folder generated automatically by jest when toMatchSnapshot() is invoked
     //do not make manual changes to the above folder
-    const wrapper = shallow(<Header />)
+    const wrapper = shallow(<Header startLogin={() => {}} />)
     //expect(wrapper.find('h1').text()).toBe('Expensify')
     //expect(toJson(wrapper)).toMatchSnapshot()
     expect(wrapper).toMatchSnapshot()
+})
+
+test('should call startLogout on button click', () => {
+    const startLogout = jest.fn()
+    const wrapper = shallow(<Header startLogout={startLogout} />)
+    wrapper.find('button').simulate('click')
+    expect(startLogout).toHaveBeenCalled()
 })

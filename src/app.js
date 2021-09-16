@@ -8,6 +8,7 @@ import configureStore from './store/configureStore'
 // import getVisibleExpenses from './selectors/expenses'
 import { startSetExpenses } from './actions/expenses'
 import { login, logout } from './actions/auth'
+import LoadingPage from './components/LoadingPage'
 
 import 'normalize.css/normalize.css' //normalize.css file in normalize.css module. This gives common style base across browsers/OS, so that styles built on top of that base looks same in all devices/browsers
 import './styles/styles.scss' //webpack sees this and converts css to js using loaders we installed. Not good performance-wise
@@ -40,7 +41,7 @@ const jsx = (
     </Provider>
 )
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('myapp'))
+ReactDOM.render(<LoadingPage />, document.getElementById('myapp'))
 
 let hasRendered = false
 
